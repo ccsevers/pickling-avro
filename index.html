@@ -38,6 +38,7 @@
 
 <div class="highlight"><pre><span class="k">import</span> <span class="nn">scala.pickling._</span>
 <span class="k">import</span> <span class="nn">io.topology.pickling.avro.binary_</span>
+<span class="k">import</span> <span class="nn">akka.util.ByteString</span>
 
 <span class="c1">// a simple ADT for people</span>
 <span class="k">case</span> <span class="k">class</span> <span class="nc">Person</span><span class="o">(</span><span class="n">name</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">age</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>
@@ -49,13 +50,37 @@
 <span class="k">val</span> <span class="n">originalAlan</span> <span class="k">=</span> <span class="nc">Person</span><span class="o">(</span><span class="s">"Alan Turing"</span><span class="o">,</span> <span class="mi">42</span><span class="o">)</span>
 
 <span class="c1">// serialize the instance</span>
-<span class="k">val</span> <span class="n">bytes</span> <span class="k">=</span> <span class="n">originalAlan</span><span class="o">.</span><span class="n">pickle</span><span class="o">.</span><span class="n">value</span>
+<span class="k">val</span> <span class="n">pickle</span> <span class="k">=</span> <span class="n">originalAlan</span><span class="o">.</span><span class="n">pickle</span>
+<span class="k">val</span> <span class="n">bytes</span><span class="k">:</span> <span class="kt">ByteString</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">value</span>
 
-<span class="c1">// reconstitute </span>
+<span class="c1">// reconstitute the instance</span>
 <span class="k">val</span> <span class="n">unpickledAlan</span> <span class="k">=</span> <span class="nc">AvroBinaryPickle</span><span class="o">(</span><span class="n">bytes</span><span class="o">).</span><span class="n">unpickle</span><span class="o">[</span><span class="kt">Person</span><span class="o">]</span>
 
-<span class="n">unpickledAlan</span> <span class="o">==</span> <span class="n">originalAlan</span>  <span class="c1">// true</span>
+<span class="n">unpickledAlan</span> <span class="o">==</span> <span class="n">originalAlan</span>  <span class="c1">// evaluates to `true`</span>
 </pre></div>
+
+<h2>
+<a name="reference" class="anchor" href="#reference"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<ol>
+<li><a href="http://avro.apache.org/docs/current/spec.html">Current Apache Avro Specification</a></li>
+<li><a href="http://lampwww.epfl.ch/%7Ehmiller/pickling">Scala Pickling</a></li>
+</ol><h2>
+<a name="legal" class="anchor" href="#legal"><span class="octicon octicon-link"></span></a>Legal</h2>
+
+<p>Apache Avro is a trademark of The Apache Software Foundation.</p>
+
+<p>pickling-avro-binary is distributed under the BSD 2-Clause License, the text of which follows:</p>
+
+<p>Copyright (c) 2013, Connor Doyle<br>
+All rights reserved.</p>
+
+<p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p>
+
+<ul>
+<li><p>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</p></li>
+<li><p>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</p></li>
+</ul><p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
       </section>
       <footer>
         <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
