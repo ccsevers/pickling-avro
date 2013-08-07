@@ -1,0 +1,7 @@
+target/
+project/*/
+**.swp
+**.tmp
+**.log
+**.DS_Store
+
