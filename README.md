@@ -5,6 +5,8 @@
 ## Usage (planned)
 
 ```scala
+package io.topology.pickling.avro.binary.tests
+
 import scala.pickling._
 import io.topology.pickling.avro.binary_
 import akka.util.ByteString
@@ -14,6 +16,17 @@ case class Person(name: String, age: Int)
 
 // generate an Avro schema for type Person
 val personSchema = implicitly[[SPickler[Person]]].schema
+/*
+  {
+    "name": "Person",
+    "type": "record",
+    "fields": [
+      {"name": "name", "type": "string"},
+      {"name": "age", "type": "int"}
+    ],
+    "namespace": "io.topology.pickling.avro.binary.tests"
+  }
+*/
 
 // an instance of Person
 val originalAlan = Person("Alan Turing", 42)
