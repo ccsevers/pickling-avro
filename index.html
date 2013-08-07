@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Pickling-avro by topology-io</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Pickling-avro</h1>
+        <p class="header">Scala-pickling support for serializing arbitrary types to Avro binary, as well as generating Avro schemas for those types.</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/topology-io/pickling-avro/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/topology-io/pickling-avro/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/topology-io/pickling-avro">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/topology-io">topology-io</a></p>
+
+
+      </header>
+      <section>
+        <h1>
+<a name="pickling-avro" class="anchor" href="#pickling-avro"><span class="octicon octicon-link"></span></a>pickling-avro</h1>
+
+<h2>
+<a name="usage-planned" class="anchor" href="#usage-planned"><span class="octicon octicon-link"></span></a>Usage (planned)</h2>
+
+<div class="highlight"><pre><span class="k">import</span> <span class="nn">scala.pickling._</span>
+<span class="k">import</span> <span class="nn">io.topology.pickling.avro.binary_</span>
+
+<span class="c1">// a simple ADT for people</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Person</span><span class="o">(</span><span class="n">name</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">age</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>
+
+<span class="c1">// generate an Avro schema for type Person</span>
+<span class="k">val</span> <span class="n">personSchema</span> <span class="k">=</span> <span class="n">implicitly</span><span class="o">[[</span><span class="kt">SPickler</span><span class="o">[</span><span class="kt">Person</span><span class="o">]]].</span><span class="n">schema</span>
+
+<span class="c1">// an instance of Person</span>
+<span class="k">val</span> <span class="n">originalAlan</span> <span class="k">=</span> <span class="nc">Person</span><span class="o">(</span><span class="s">"Alan Turing"</span><span class="o">,</span> <span class="mi">42</span><span class="o">)</span>
+
+<span class="c1">// serialize the instance</span>
+<span class="k">val</span> <span class="n">bytes</span> <span class="k">=</span> <span class="n">originalAlan</span><span class="o">.</span><span class="n">pickle</span><span class="o">.</span><span class="n">value</span>
+
+<span class="c1">// reconstitute </span>
+<span class="k">val</span> <span class="n">unpickledAlan</span> <span class="k">=</span> <span class="nc">AvroBinaryPickle</span><span class="o">(</span><span class="n">bytes</span><span class="o">).</span><span class="n">unpickle</span><span class="o">[</span><span class="kt">Person</span><span class="o">]</span>
+
+<span class="n">unpickledAlan</span> <span class="o">==</span> <span class="n">originalAlan</span>  <span class="c1">// true</span>
+</pre></div>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
