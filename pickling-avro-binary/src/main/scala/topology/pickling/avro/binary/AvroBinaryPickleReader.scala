@@ -1,4 +1,4 @@
-package io.topology.pickling.avro.binary
+package topology.pickling.avro.binary
 
 import scala.reflect.runtime.universe._
 import scala.pickling._
@@ -32,6 +32,7 @@ class AvroBinaryPickleReader(
   def atObject: Boolean = !atPrimitive
 
   def readField(name: String): AvroBinaryPickleReader = {
+    // TODO
     this
   }
 
@@ -39,14 +40,20 @@ class AvroBinaryPickleReader(
     // TODO
   }
 
-  def beginCollection(): PReader = this
+  def beginCollection(): PReader = {
+    // TODO
+    this
+  }
 
   def readLength(): Int = {
     // TODO
     ???
   }
 
-  def readElement(): PReader = this
+  def readElement(): PReader = {
+    // TODO
+    this
+  }
 
   def endCollection(): Unit = {
     // TODO

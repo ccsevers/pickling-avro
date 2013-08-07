@@ -6,7 +6,7 @@ import org.scalastyle.sbt.ScalastylePlugin
 import com.typesafe.sbt.SbtScalariform._
 import scalariform.formatter.preferences._
 
-object PicklingavroBuild extends Build {
+object PicklingAvroBuild extends Build {
 
   lazy val root = Project(
     id = "root",
@@ -18,7 +18,7 @@ object PicklingavroBuild extends Build {
 
   lazy val binary = Project(
     id = "pickling-avro-binary",
-    base = file("binary"),
+    base = file("pickling-avro-binary"),
     settings = commonSettings
   )
 

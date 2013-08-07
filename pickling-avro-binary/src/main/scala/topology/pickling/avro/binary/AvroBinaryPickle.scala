@@ -1,4 +1,4 @@
-package io.topology.pickling.avro.binary
+package topology.pickling.avro.binary
 
 import scala.pickling._
 import akka.util.ByteString

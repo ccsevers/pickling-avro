@@ -1,14 +1,12 @@
 # pickling-avro
 
-
-
 ## Usage (planned)
 
 ```scala
-package io.topology.pickling.avro.binary.tests
+package topology.pickling.avro.binary.tests
 
 import scala.pickling._
-import io.topology.pickling.avro.binary_
+import topology.pickling.avro.binary_
 import akka.util.ByteString
 
 // a simple ADT for people
@@ -24,7 +22,7 @@ val personSchema = implicitly[[SPickler[Person]]].schema
       {"name": "name", "type": "string"},
       {"name": "age", "type": "int"}
     ],
-    "namespace": "io.topology.pickling.avro.binary.tests"
+    "namespace": "topology.pickling.avro.binary.tests"
   }
 */
 
