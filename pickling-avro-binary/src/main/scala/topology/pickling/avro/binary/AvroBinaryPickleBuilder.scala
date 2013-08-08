@@ -3,10 +3,11 @@ package topology.pickling.avro.binary
 import scala.pickling._
 import scala.reflect.runtime.universe._
 
-import akka.util.{ ByteString, ByteStringBuilder }
-
 import org.slf4j.LoggerFactory
 
+/**
+  * Not thread-safe!
+  */
 class AvroBinaryPickleBuilder(format: AvroBinaryPickleFormat, encoder: AvroBinaryEncoder = new AvroBinaryEncoder)
     extends PBuilder
     with PickleTools {
@@ -18,14 +19,32 @@ class AvroBinaryPickleBuilder(format: AvroBinaryPickleFormat, encoder: AvroBinar
 
   private var currentEntryType: Type = _
 
-  def beginEntry(picklee: Any): this.type = withHints { hints =>
-    debug("{}.beginEntry({})", getClass.getName, picklee)
+  def beginEntry(value: Any): this.type = withHints { hints =>
+    debug("{}.beginEntry({})", getClass.getName, value)
     debug("\twhere hints.tag.tpe = {}", hints.tag.tpe)
 
     currentEntryType = hints.tag.tpe
-    // TODO
+
+    if (value == null) encoder.writeNull()
+    else value match {
+      case _: Unit    => encoder.writeNull()
+      case v: Byte    => encoder writeByte (v)
+      case v: Boolean => encoder.writeBoolean(v)
+      case v: String  => encoder.writeString(v)
+      case v: Char    => encoder.writeChar(v)
+      case v: Short   => encoder.writeShort(v)
+      case v: Int     => encoder.writeInt(v)
+      case v: Long    => encoder.writeLong(v)
+      case v: Float   => encoder.writeFloat(v)
+      case v: Double  => encoder.writeDouble(v)
+      case v: Any     => beginComplex(v, hints)
+    }
 
     this
+  }
+
+  protected def beginComplex(value: Any, hints: Hints) {
+    // TODO
   }
 
   def putField(name: String, pickler: this.type => Unit): this.type = {

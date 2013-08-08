@@ -3,19 +3,15 @@ package topology.pickling.avro.binary
 import scala.pickling._
 import scala.reflect.runtime.universe.Mirror
 
-import akka.util.ByteString
-
 class AvroBinaryPickleFormat extends PickleFormat {
 
   type PickleType = AvroBinaryPickle
-  type OutputType = EncodingOutput[ByteString]
+  type OutputType = AvroBinaryEncoder
 
   def createBuilder() = new AvroBinaryPickleBuilder(this)
 
-  def createBuilder(out: EncodingOutput[ByteString]): PBuilder = out match {
-    case encoder: AvroBinaryEncoder => new AvroBinaryPickleBuilder(this, encoder)
-    case _                          => new AvroBinaryPickleBuilder(this)
-  }
+  def createBuilder(out: AvroBinaryEncoder): PBuilder =
+    new AvroBinaryPickleBuilder(this, out)
 
   def createReader(pickle: AvroBinaryPickle, mirror: Mirror) =
     new AvroBinaryPickleReader(pickle.value, mirror, this)

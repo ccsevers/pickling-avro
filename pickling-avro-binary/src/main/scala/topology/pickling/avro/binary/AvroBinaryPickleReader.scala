@@ -2,10 +2,11 @@ package topology.pickling.avro.binary
 
 import scala.reflect.runtime.universe._
 import scala.pickling._
-import akka.util.ByteString
+
+import java.nio.ByteBuffer
 
 class AvroBinaryPickleReader(
-    bytes: ByteString,
+    bytes: ByteBuffer,
     val mirror: Mirror,
     format: AvroBinaryPickleFormat) extends PReader with PickleTools {
 
