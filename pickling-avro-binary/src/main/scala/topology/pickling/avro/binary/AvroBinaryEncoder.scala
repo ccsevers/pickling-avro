@@ -2,31 +2,25 @@ package topology
 package pickling.avro.binary
 
 import scala.pickling.Output
-import java.nio.ByteBuffer
 
 import org.apache.avro.io.{ EncoderFactory, DirectBinaryEncoder }
 
-/**
-  * Not thread-safe!
-  */
-class AvroBinaryEncoder extends Output[ByteBuffer] {
+class AvroBinaryEncoder extends Output[ByteString] {
 
-  private val buffer = ByteBuffer.allocate(256)
-
-  private val bufferOutputStream = new ByteBufferOutputStream(buffer)
+  private val builder = new ByteStringBuilder
 
   import AvroBinaryEncoder.{ apacheEncoderFactory => factory }
   private val apacheEncoder = factory.directBinaryEncoder(
-    bufferOutputStream,
+    builder.asOutputStream,
     null // the encoder to (not) re-use
   )
 
-  def put(bs: ByteBuffer): this.type = {
-    buffer put bs
+  def put(bs: ByteString): this.type = {
+    builder ++= bs
     this
   }
 
-  def result(): ByteBuffer = buffer.asReadOnlyBuffer
+  def result(): ByteString = builder.result
 
   final val trueByte = 1.toByte
   final val falseByte = 0.toByte
@@ -36,11 +30,11 @@ class AvroBinaryEncoder extends Output[ByteBuffer] {
 
   def writeNull(): Unit = { /* does nothing */ }
 
-  def writeByte(value: Byte): Unit = buffer put value
+  def writeByte(value: Byte): Unit = builder += value
 
-  def writeBytes(bytes: Seq[Byte]): Unit = buffer put bytes.toArray
+  def writeBytes(bytes: Seq[Byte]): Unit = builder ++= bytes
 
-  def writeBytes(bytes: Array[Byte]): Unit = buffer put bytes
+  def writeBytes(bytes: Array[Byte]): Unit = builder putBytes bytes
 
   def writeString(value: String): Unit = apacheEncoder writeString value
 

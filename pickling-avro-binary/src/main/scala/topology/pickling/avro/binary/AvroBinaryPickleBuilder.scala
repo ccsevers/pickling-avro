@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory
 /**
   * Not thread-safe!
   */
-class AvroBinaryPickleBuilder(format: AvroBinaryPickleFormat, encoder: AvroBinaryEncoder = new AvroBinaryEncoder)
-    extends PBuilder
-    with PickleTools {
+class AvroBinaryPickleBuilder(
+    format: AvroBinaryPickleFormat,
+    encoder: AvroBinaryEncoder = new AvroBinaryEncoder) extends PBuilder with PickleTools {
 
   import format._
 
@@ -47,7 +47,7 @@ class AvroBinaryPickleBuilder(format: AvroBinaryPickleFormat, encoder: AvroBinar
     // TODO
   }
 
-  def putField(name: String, pickler: this.type => Unit): this.type = {
+  def putField(name: String, pickler: PBuilder => Unit): PBuilder = {
     debug("{}.putField({}, {})", getClass.getName, name, pickler)
     // TODO
     this
@@ -64,7 +64,7 @@ class AvroBinaryPickleBuilder(format: AvroBinaryPickleFormat, encoder: AvroBinar
     this
   }
 
-  def putElement(pickler: this.type => Unit): this.type = {
+  def putElement(pickler: PBuilder => Unit): PBuilder = {
     debug("{}.putElement({})", getClass.getName, pickler)
     // TODO
     this
