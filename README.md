@@ -32,7 +32,7 @@ val originalAlan = Person("Alan Turing", 42)
 val pickle = originalAlan.pickle
 
 // reconstitute the instance
-val unpickledAlan = AvroBinaryPickle(pickle.value).unpickle[Person]
+val unpickledAlan = pickle.unpickle[Person]
 
 unpickledAlan == originalAlan  // evaluates to `true`
 ```
