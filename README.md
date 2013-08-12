@@ -7,7 +7,6 @@ package topology.pickling.avro.binary.tests
 
 import scala.pickling._
 import topology.pickling.avro.binary_
-import akka.util.ByteString
 
 // a simple ADT for people
 case class Person(name: String, age: Int)
@@ -31,10 +30,9 @@ val originalAlan = Person("Alan Turing", 42)
 
 // serialize the instance
 val pickle = originalAlan.pickle
-val bytes: ByteString = pickle.value
 
 // reconstitute the instance
-val unpickledAlan = AvroBinaryPickle(bytes).unpickle[Person]
+val unpickledAlan = AvroBinaryPickle(pickle.value).unpickle[Person]
 
 unpickledAlan == originalAlan  // evaluates to `true`
 ```
